@@ -1,0 +1,58 @@
+{
+  "name": "express-auth-service",
+  "version": "1.0.0",
+  "description": "A lightweight Express.js backend providing secure JWT-based authentication, user profile APIs, and CRUD operations, designed to support a scalable frontend dashboard.",
+  "keywords": [
+    "express",
+    "backend",
+    "api",
+    "authentication",
+    "jwt",
+    "mongodb",
+    "mongoose",
+    "crud",
+    "node.js",
+    "rest-api"
+  ],
+  "license": "ISC",
+  "author": "Tausif Shaikh",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "dev": "tsx watch -r dotenv/config src/index.ts",
+    "build": "rimraf dist && npx tsc",
+    "prestart": "npm run build",
+    "start": "nodemon -r dotenv/config dist/index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.8.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.20.0",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "rimraf": "^6.1.2",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mongoose": "^5.11.96",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.10.1",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "tsx": "^3.12.7"
+  }
+}

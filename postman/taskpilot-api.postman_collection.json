@@ -1,0 +1,836 @@
+{
+	"info": {
+		"_postman_id": "37f22100-41f1-46bb-9c7f-8768ac6f6432",
+		"name": "TaskPilot",
+		"description": "StartFragmentThis Postman collection contains all API endpoints for **TaskPilot**, a full-stack productivity and dashboard application featuring secure authentication, user management, and CRUD operations for tasks, notes, and projects.  \n  \nIt includes both **User** and **Admin** routes, complete with JWT-based authentication, validation, and role-based access control.EndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39433150",
+		"_collection_link": "https://sigma6-4246.postman.co/workspace/Sigma-Web-Development-Express~2be88bee-930e-4e9c-9783-8d73af130776/collection/39433150-37f22100-41f1-46bb-9c7f-8768ac6f6432?action=share&source=collection_link&creator=39433150"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"toseaf.s@somaiya.edu\",\r\n    \"password\" : \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/auth/login",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\" : \"Tausif Maqbool Ahmed Shaikh\",\r\n    \"username\" : \"shaitausif\",\r\n    \"email\" : \"toseaf.s@somaiya.edu\",\r\n    \"password\" : \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/auth/register",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/auth/logout",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Tokens",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/auth/refresh-tokens",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"auth",
+								"refresh-tokens"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/users/get-all-users",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"users",
+								"get-all-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/users/get-current-user",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"users",
+								"get-current-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/users/get-user-by-id/691e4d7d3f0db3ec9128bcd1",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"users",
+								"get-user-by-id",
+								"691e4d7d3f0db3ec9128bcd1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Role",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\" : \"Admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/users/update-user-role/691efb972ddb12862eda94aa",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"users",
+								"update-user-role",
+								"691efb972ddb12862eda94aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/users/delete-user/691efb972ddb12862eda94aa",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"users",
+								"delete-user",
+								"691efb972ddb12862eda94aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Current User Account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/users/delete-current-user-account",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"users",
+								"delete-current-user-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Current Password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"12345678\",\r\n    \"newPassword\": \"12345698\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/users/change-password",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"users",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bio\" : \"Hi, My name is Tausif Shaikh, I'm a full-stack Developer.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/users/update-profile",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"users",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "Create Task",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Fix the Service worker's bug from VideoTube\",\r\n    \"description\" : \"Fix the bug with the service worker of VideoTube which is for sending the push notification to the user. Fix it!\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/tasks/create",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"tasks",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/tasks/get-tasks",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"tasks",
+								"get-tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Task By ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/tasks/get-task-by-id/691f07b771117eddca98285a",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"tasks",
+								"get-task-by-id",
+								"691f07b771117eddca98285a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Fix the Service Worker bug as soon as possible\",\r\n    \"priority\" : \"High\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/tasks/update-task/691f07b771117eddca98285a",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"tasks",
+								"update-task",
+								"691f07b771117eddca98285a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Task",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/tasks/delete-task/691f07b771117eddca98285a",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"tasks",
+								"delete-task",
+								"691f07b771117eddca98285a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Task",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/tasks/search?q=fix&priority=High&status=Pending",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"tasks",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "fix"
+								},
+								{
+									"key": "priority",
+									"value": "High"
+								},
+								{
+									"key": "status",
+									"value": "Pending"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/tasks/get-all-tasks",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"tasks",
+								"get-all-tasks"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "Create Note",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"This is my first note\",\r\n    \"content\" : \"I don't know what to write in this note, It's just for testing.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/notes/create",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"notes",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/notes/get-notes",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"notes",
+								"get-notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Note by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/notes/get-note-by-id/691f0fe195a819a48398faa0",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"notes",
+								"get-note-by-id",
+								"691f0fe195a819a48398faa0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Note",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Let me change the title of this note, Ah!, yes it's done.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/notes/update-note/691f0fe195a819a48398faa0",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"notes",
+								"update-note",
+								"691f0fe195a819a48398faa0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Note",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/notes/delete-note/691f0fe195a819a48398faa0",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"notes",
+								"delete-note",
+								"691f0fe195a819a48398faa0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/notes/search?tags=Personal",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"notes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": "Personal"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "Create Project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"TaskPilot\",\r\n    \"description\" : \"A Task Manager application with an intuitive and responsive UI.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/projects/create",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"projects",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/projects/get-projects",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"projects",
+								"get-projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/projects/get-project-by-id/691f131a28a1eaa6a40e6903",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"projects",
+								"get-project-by-id",
+								"691f131a28a1eaa6a40e6903"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Project",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\" : \"A Task Manager application with an intuitive and responsive and interactive UI.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/projects/update-project/691f131a28a1eaa6a40e6903",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"projects",
+								"update-project",
+								"691f131a28a1eaa6a40e6903"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{task-pilot}}/projects/delete-project/691f131a28a1eaa6a40e6903",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"projects",
+								"delete-project",
+								"691f131a28a1eaa6a40e6903"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Task to Project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/projects/add-task-to-project/691f07b771117eddca98285a/691f199305bc4fa4270269fc",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"projects",
+								"add-task-to-project",
+								"691f07b771117eddca98285a",
+								"691f199305bc4fa4270269fc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Task from Project",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/projects/remove-task-from-project/691f07b771117eddca98285a/691f199305bc4fa4270269fc",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"projects",
+								"remove-task-from-project",
+								"691f07b771117eddca98285a",
+								"691f199305bc4fa4270269fc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/projects/get-project-tasks/691f199305bc4fa4270269fc",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"projects",
+								"get-project-tasks",
+								"691f199305bc4fa4270269fc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get User Dashboard Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/dashboard/",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"dashboard",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Admin Dashboard Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{task-pilot}}/dashboard/admin",
+							"host": [
+								"{{task-pilot}}"
+							],
+							"path": [
+								"dashboard",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
