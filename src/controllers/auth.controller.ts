@@ -7,6 +7,7 @@ import mongoose from 'mongoose'
 import { Request, Response } from "express";
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from '../utils/index.js'
 import { AuthPayload } from '../utils/index.js'
+import { uploadOnCloudinary } from '../utils/cloudinary.js'
 
 
 // This controller is responsible for registering the user
@@ -24,9 +25,29 @@ const registerUser = asyncHandler(async(req: Request, res: Response) => {
         ]
     })
 
+    
 
     if(isExistingUser){
         throw new ApiError(409, "User with Email or Username already exists")
+    }
+
+    // @ts-ignore
+     const avatarLocalPath = req.file.path
+     console.log("Avatar Local Path",avatarLocalPath)
+    if(avatarLocalPath){
+        const avatar = await uploadOnCloudinary(avatarLocalPath)
+        if(!avatar) throw new ApiError(500, "Failed to upload Avatar on Cloudinary")
+
+        const user = await User.create({
+            fullName,
+            username,
+            avatar : avatar.secure_url,
+            email,
+            password
+        })
+        if(!user) throw new ApiError(500, "Unable to register the User.")
+           
+        return res.status(201).json(new ApiResponse(201, {}, "User registered successfully."))
     }
 
     const user = await User.create({
@@ -37,11 +58,11 @@ const registerUser = asyncHandler(async(req: Request, res: Response) => {
     })
 
     // Avoid mixing inclusion and exclusion in projection. Exclude both sensitive fields explicitly.
-    const userCreated = await User.findById(user._id).select("-password -refreshToken");
 
-    if(!userCreated) throw new ApiError(500, "Unable to register the User.")
 
-    return res.status(201).json(new ApiResponse(201, userCreated, "User registered successfully."))
+    if(!user) throw new ApiError(500, "Unable to register the User.")
+
+    return res.status(201).json(new ApiResponse(201, {}, "User registered successfully."))
 
 })
 
@@ -74,16 +95,16 @@ const loginUser = asyncHandler(async(req: Request, res: Response) => {
     // 2. Verify the presence of the same email or username with the same password in the database and if it exists then give access and refresh token to user
     // 3. send the tokens in the cookies
 
-    const {username, email, password} = req.body
+    const {identifier, password} = req.body
 
-    if(!username && !email){
+    if(!identifier){
         throw new ApiError(400, "Username or Email is required")
     }
 
     const user = await User.findOne({
         $or : [
-            {username},
-            {email}
+            {username: identifier},
+            {email: identifier}
         ]
     })
 

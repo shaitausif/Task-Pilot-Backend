@@ -8,7 +8,8 @@ const app = express()
 
 // we use, use method of express to use middlewares and for configuration
 app.use(cors({
-    origin : process.env.CORS_ORIGIN
+    origin : process.env.CORS_ORIGIN,
+    credentials : true
 }))
 
 // here we're configuring the express to allow json requests with a certain limit

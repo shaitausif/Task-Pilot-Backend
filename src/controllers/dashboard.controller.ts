@@ -8,28 +8,14 @@ import { Task } from "../models/task.model.js";
 import { Notes } from "../models/notes.model.js";
 import { Project } from "../models/projects.model.js";
 
-
-
 const getUserDashboardStats = asyncHandler(
   async (req: Request, res: Response) => {
-    // Data to fetch for the current User:
-    /*
-        total tasks
-        completed tasks
-        pending tasks
-        total notes
-        total projects
-    */
-
-    // build aggregation against the User collection and lookup related collections
-    // use collection names from model.collection.name to avoid hard-coding
     // @ts-ignore
     const userId = new mongoose.Types.ObjectId(req.user?._id);
 
     const dashboardData = await User.aggregate([
-      { $match: { _id: userId } },
+      { $match: { _id: userId } }, // bring user's tasks, notes and projects into this pipeline (unchanged)
 
-      // bring user's tasks, notes and projects into this pipeline
       {
         $lookup: {
           from: Task.collection.name,
@@ -53,12 +39,11 @@ const getUserDashboardStats = asyncHandler(
           foreignField: "user",
           as: "projects",
         },
-      },
+      }, // compute counts
 
-      // compute counts. Use $filter + $size for robust counting (case-insensitive match for completed)
       {
         $addFields: {
-          totalTasks: { $size: { $ifNull: ["$tasks", []] } },
+          totalTasks: { $size: { $ifNull: ["$tasks", []] } }, // 1. COMPLETED TASKS (Case-insensitive check for 'completed')
 
           completedTasks: {
             $size: {
@@ -68,12 +53,28 @@ const getUserDashboardStats = asyncHandler(
                 cond: {
                   $eq: [
                     { $toLower: { $ifNull: ["$$t.status", ""] } },
-                    "Completed",
+                    "completed",
                   ],
                 },
               },
             },
           },
+
+          // 2. NEW: IN PROGRESS TASKS (Case-insensitive check for 'in progress')
+          inProgressTasks: {
+            $size: {
+              $filter: {
+                input: { $ifNull: ["$tasks", []] },
+                as: "t",
+                cond: {
+                  $eq: [
+                    { $toLower: { $ifNull: ["$$t.status", ""] } },
+                    "in-progress",
+                  ],
+                },
+              },
+            },
+          }, // 3. PENDING TASKS (Case-insensitive check for 'pending')
 
           pendingTasks: {
             $size: {
@@ -81,9 +82,9 @@ const getUserDashboardStats = asyncHandler(
                 input: { $ifNull: ["$tasks", []] },
                 as: "t",
                 cond: {
-                  $ne: [
+                  $eq: [
                     { $toLower: { $ifNull: ["$$t.status", ""] } },
-                    "Completed",
+                    "pending",
                   ],
                 },
               },
@@ -95,24 +96,24 @@ const getUserDashboardStats = asyncHandler(
               {
                 $sortArray: {
                   input: { $ifNull: ["$tasks", []] },
-                  sortBy: { createdAt: -1 }
-                }
+                  sortBy: { createdAt: -1 },
+                },
               },
-              5
-            ]
-          }
-,
+              5,
+            ],
+          },
+
           totalNotes: { $size: { $ifNull: ["$notes", []] } },
           totalProjects: { $size: { $ifNull: ["$projects", []] } },
         },
-      },
+      }, // update $project stage to include the new field
 
-      // only return the counts we need
       {
         $project: {
           _id: 0,
           totalTasks: 1,
           completedTasks: 1,
+          inProgressTasks: 1, // <--- New field added
           pendingTasks: 1,
           totalNotes: 1,
           totalProjects: 1,
@@ -121,12 +122,15 @@ const getUserDashboardStats = asyncHandler(
       },
     ]);
 
+    // update default stats object
     const stats = (dashboardData && dashboardData[0]) || {
       totalTasks: 0,
       completedTasks: 0,
+      inProgressTasks: 0, // <--- New field added
       pendingTasks: 0,
       totalNotes: 0,
       totalProjects: 0,
+      recentTasks: [],
     };
 
     return res
@@ -144,12 +148,13 @@ const getAdminDashboardStats = asyncHandler(
     }
 
     // Run counts in parallel for performance
-    const [totalUsers, totalTasks, totalNotes, totalProjects] = await Promise.all([
-      User.countDocuments(),
-      Task.countDocuments(),
-      Notes.countDocuments(),
-      Project.countDocuments(),
-    ]);
+    const [totalUsers, totalTasks, totalNotes, totalProjects] =
+      await Promise.all([
+        User.countDocuments(),
+        Task.countDocuments(),
+        Notes.countDocuments(),
+        Project.countDocuments(),
+      ]);
 
     const stats = {
       totalUsers,

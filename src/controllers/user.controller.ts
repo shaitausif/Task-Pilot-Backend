@@ -11,16 +11,19 @@ import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js
 
 const updateProfile = asyncHandler(async(req: Request, res: Response) => {
     // Update fields such as fullName, username, bio, email and avatar
-    const { fullName, username, email, bio } = req.body;
+    const { fullName, bio } = req.body;
 
-    if(!username && !fullName && !email && !bio){
+    if(!fullName && !bio){
         throw new ApiError(400, "All fields are required.")
     } 
 
     
 
     // @ts-ignore
-    const avatarLocalPath = req.files?.avatar[0]?.path
+    const avatarLocalPath = req.file?.path
+    console.log(avatarLocalPath)
+    console.log(fullName)
+    console.log(bio)
 
     const user = await User.findById(req.user)
     if(!user) throw new ApiError(404, "User not found")
@@ -29,6 +32,7 @@ const updateProfile = asyncHandler(async(req: Request, res: Response) => {
     let avatar = null;
     if(avatarLocalPath){
         const oldAvatar = user.avatar
+        delete req.body['avatar']
         if(oldAvatar) {
             const isDeleted = await deleteFromCloudinary(oldAvatar)
             if(isDeleted.result !== "ok") throw new ApiError(500,"Unable to delete the old Avatar from the Cloudinary.")
@@ -37,13 +41,11 @@ const updateProfile = asyncHandler(async(req: Request, res: Response) => {
         if(!avatar) throw new ApiError(500, "Failed to upload avatar on Cloudinary.")
     }
 
-    // Delete the unchanged files from the req.body
-    for(const key in req.body){
-        if(req.body[key] === user[key]){
-            delete req.body[key]
-        }
-    }
-
+    
+    user.fullName = fullName;
+    user.bio = bio;
+    await user.save({ validateBeforeSave: false })
+    console.log(req.body)
 
     if(avatar){
         const updatedUser = await User.findByIdAndUpdate(req.user._id,
@@ -136,26 +138,31 @@ const getUserById = asyncHandler(async(req: Request, res: Response) => {
 
 // ADMIN ONLY
 const updateUserRole = asyncHandler(async(req: Request, res: Response) => {
-    const { role } = req.body;
+    
     const { userId } = req.params
 
     const user = await User.findById(req.user._id)
     if(user.role != "Admin") throw new ApiError(401, "Unauthorized User")
-    const isUserExist = await User.findByIdAndUpdate(
+   const isUserExist = await User.findById(userId)
+
+    if(!isUserExist) throw new ApiError(404, "User doesn't exist")
+        console.log(isUserExist)
+
+    const userRoleUpdate = await User.findByIdAndUpdate(
         userId,
         {
-            role
+            $set : {
+                role : isUserExist.role == "Admin" ? "User" : "Admin"
+            }
         },
         {
             new : true
         }
     )
-
-    if(!isUserExist) throw new ApiError(404, "User doesn't exist")
-
+    
     
 
-    return res.status(200).json(new ApiResponse(200, {_id : userId}, "User role updated successfully."))
+    return res.status(200).json(new ApiResponse(200, {_id : userId, role: userRoleUpdate.role}, "User role updated successfully."))
 
 
 })

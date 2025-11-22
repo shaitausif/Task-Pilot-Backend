@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 
-enum Tags {
+enum Tag {
     Work = "Work",
     Personal = "Personal"
 }
@@ -10,7 +10,7 @@ enum Tags {
 export interface NotesInterface extends Document{
     title : string;
     content : string;
-    tags : Tags;
+    tag : Tag;
     user : Schema.Types.ObjectId,
     createdAt : Date;
     updatedAt : Date
@@ -27,10 +27,10 @@ const notesSchema = new Schema<NotesInterface>(
             type : String,
             required : true
         },
-        tags : {
+        tag : {
             type : String,
-            default : Tags.Personal,
-            enum : Object.values(Tags)
+            default : Tag.Personal,
+            enum : Object.values(Tag)
         },
         user : {
             type : Schema.Types.ObjectId,

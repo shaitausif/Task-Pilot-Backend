@@ -73,6 +73,8 @@ const updateTask = asyncHandler(async (req: Request, res: Response) => {
 	}
 
 	const updates = req.body;
+	console.log(updates)
+	if(!updates) throw new ApiError(400, "Fields are required")
 
 	Object.assign(task, updates);
 	await task.save();

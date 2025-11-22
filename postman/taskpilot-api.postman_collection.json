@@ -18,7 +18,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"toseaf.s@somaiya.edu\",\r\n    \"password\" : \"12345678\"\r\n}",
+							"raw": "{\r\n    \"identifier\" : \"toseaf.s@somaiya.edu\",\r\n    \"password\" : \"12345698\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -70,6 +70,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{task-pilot}}/auth/logout",
 							"host": [
@@ -368,7 +377,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\" : \"Fix the Service Worker bug as soon as possible\",\r\n    \"priority\" : \"High\"\r\n}",
+							"raw": "{\r\n    \"title\" : \"Fix the Service Worker bug as soon as possible\",\r\n    \"priority\" : \"Low\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -517,9 +526,21 @@
 				},
 				{
 					"name": "Get Note by ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{task-pilot}}/notes/get-note-by-id/691f0fe195a819a48398faa0",
 							"host": [
@@ -587,7 +608,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{task-pilot}}/notes/search?tags=Personal",
+							"raw": "{{task-pilot}}/notes/search?tag=Personal",
 							"host": [
 								"{{task-pilot}}"
 							],
@@ -597,7 +618,7 @@
 							],
 							"query": [
 								{
-									"key": "tags",
+									"key": "tag",
 									"value": "Personal"
 								}
 							]
@@ -800,13 +821,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{task-pilot}}/dashboard/",
+							"raw": "{{task-pilot}}/dashboard/user",
 							"host": [
 								"{{task-pilot}}"
 							],
 							"path": [
 								"dashboard",
-								""
+								"user"
 							]
 						}
 					},

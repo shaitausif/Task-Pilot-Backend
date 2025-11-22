@@ -20,7 +20,7 @@ import mongoose from "mongoose";
 // Create a new note for the authenticated user
 const createNote = asyncHandler(async (req: Request, res: Response) => {
 	// validate required fields
-	const { title, content, tags } = req.body;
+	const { title, content, tag } = req.body;
 
 	if (!title || !content) {
 		// Bad request when essential fields are missing
@@ -30,7 +30,7 @@ const createNote = asyncHandler(async (req: Request, res: Response) => {
 	// `req.user` is set by the auth middleware; using ts-ignore to avoid TS complaints
 	// We intentionally store only the user's _id reference here to keep the note small.
 	
-	const note = await Notes.create({ title, content, tags, user: req.user._id });
+	const note = await Notes.create({ title, content, tag, user: req.user._id });
 
 	return res.status(201).json(new ApiResponse(201, note, "Note created successfully"));
 });
@@ -112,7 +112,7 @@ const deleteNote = asyncHandler(async (req: Request, res: Response) => {
 // This is intentionally lightweight and does not require text indexes; if performance
 // becomes an issue we should add a text index and switch to `$text` search.
 const searchNotes = asyncHandler(async (req: Request, res: Response) => {
-	const { q, tags } = req.query as any;
+	const { q, tag } = req.query as any;
 
 	const filter: any = {};
 
@@ -128,7 +128,7 @@ const searchNotes = asyncHandler(async (req: Request, res: Response) => {
 		];
 	}
 
-	if (tags) filter.tags = tags;
+	if (tag) filter.tag = tag;
 
 	const notes = await Notes.find(filter).sort({ createdAt: -1 });
 

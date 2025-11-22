@@ -12,8 +12,8 @@ export const loginValidator = [
   // require password and at least one of username/email in the route handler
   body('password').notEmpty().withMessage('Password is required'),
   // allow either username or email; check at least one present
-  body('username').optional().trim(),
-  body('email').optional().isEmail().withMessage('Invalid email').normalizeEmail(),
+  body('identifier').optional().trim(),
+ 
 ]
 
 export const refreshTokenValidator = [
