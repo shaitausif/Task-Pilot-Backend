@@ -2,20 +2,21 @@ import { CookieOptions } from "express"
 import { JwtPayload } from "jsonwebtoken";
 
 
-export const accessTokenCookieOptions: CookieOptions = {    
-        httpOnly : true,
-        secure : process.env.NODE_ENV ? process.env.NODE_ENV == "development" ? false : true : true,
-        maxAge: 3600000 * 24, // 1 day
-        sameSite: 'lax'
-        
-}
+export const accessTokenCookieOptions: CookieOptions = {
+    httpOnly : true,
+    secure : true, // Must be true for SameSite='None' in production
+    maxAge: 3600000 * 24, // 1 day
+    sameSite: 'none' ,// Must be 'None' for cross-site cookies
+    domain : 'https://task-pilot-frontend-seven.vercel.app/'
+};
 
 export const refreshTokenCookieOptions: CookieOptions = {
     httpOnly : true,
-    secure : true,
+    secure : true, // Must be true
     maxAge: 3600000 * 24 * 7, // 7 days
-    sameSite: 'lax'
-}
+    sameSite: 'none' ,// Must be 'None'
+    domain : 'https://task-pilot-frontend-seven.vercel.app/'
+};
 
 
 export interface AuthPayload extends JwtPayload {
