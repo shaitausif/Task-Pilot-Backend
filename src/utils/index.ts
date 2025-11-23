@@ -3,18 +3,19 @@ import { JwtPayload } from "jsonwebtoken";
 
 
 export const accessTokenCookieOptions: CookieOptions = {
-    httpOnly : true,
+    httpOnly : false,
     secure : true, // Must be true for SameSite='None' in production
     maxAge: 3600000 * 24, // 1 day
-    sameSite: 'lax' ,// Must be 'None' for cross-site cookies
-
+    sameSite: 'none' ,// Must be 'None' for cross-site cookies
+    domain : 'vercel.app'
 };
 
 export const refreshTokenCookieOptions: CookieOptions = {
-    httpOnly : true,
+    httpOnly : false,
     secure : true, // Must be true
     maxAge: 3600000 * 24 * 7, // 7 days
-    sameSite: 'lax' ,// Must be 'None'
+    sameSite: 'none' ,// Must be 'None'
+    domain : 'vercel.app'
 
 };
 
