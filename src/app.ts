@@ -7,10 +7,21 @@ import morganMiddleware from './logger/morgan.logger.js'
 const app = express()
 
 // we use, use method of express to use middlewares and for configuration
+const whitelistString = process.env.CORS_ORIGIN;
+
+// Split the string into an array and trim whitespace from each domain.
+// If the variable is not set, use an empty array as a fallback.
+const productionOrigins = whitelistString 
+    ? whitelistString.split(',').map(s => s.trim()) 
+    : [];
+
+// Define the final options
 app.use(cors({
-    origin : process.env.NODE_ENV == 'development' ? "http://localhost:3000" : process.env.CORS_ORIGIN,
-    credentials : true
-}))
+    origin: process.env.NODE_ENV === 'development'
+        ? "http://localhost:3000" 
+        : productionOrigins, // <-- This is now a clean array of strings
+    credentials: true
+}));
 
 // here we're configuring the express to allow json requests with a certain limit
 app.use(express.json({limit: "16kb"}))
