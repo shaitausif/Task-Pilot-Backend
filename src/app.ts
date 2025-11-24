@@ -32,6 +32,7 @@ import taskRouter from './routes/task.route.js'
 import noteRouter from './routes/note.route.js'
 import projectRouter from './routes/project.route.js'
 import dashboardRouter from './routes/dashboard.route.js'
+import healthCheckRouter from './routes/health.route.js'
 import { errorHandler } from './middlewares/error.middleware.js'
 
 // register routers
@@ -41,6 +42,7 @@ app.use('/api/v1/tasks', taskRouter)
 app.use('/api/v1/notes', noteRouter)
 app.use('/api/v1/projects', projectRouter)
 app.use('/api/v1/dashboard', dashboardRouter)
+app.use(`/api/v1/health-check`,healthCheckRouter);
 
 // Error handler should be the last middleware
 app.use(errorHandler)
