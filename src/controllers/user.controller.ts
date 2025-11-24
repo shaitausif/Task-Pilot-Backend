@@ -21,9 +21,7 @@ const updateProfile = asyncHandler(async(req: Request, res: Response) => {
 
     // @ts-ignore
     const avatarLocalPath = req.file?.path
-    console.log(avatarLocalPath)
-    console.log(fullName)
-    console.log(bio)
+ 
 
     const user = await User.findById(req.user)
     if(!user) throw new ApiError(404, "User not found")
@@ -45,7 +43,7 @@ const updateProfile = asyncHandler(async(req: Request, res: Response) => {
     user.fullName = fullName;
     user.bio = bio;
     await user.save({ validateBeforeSave: false })
-    console.log(req.body)
+  
 
     if(avatar){
         const updatedUser = await User.findByIdAndUpdate(req.user._id,
@@ -146,7 +144,7 @@ const updateUserRole = asyncHandler(async(req: Request, res: Response) => {
    const isUserExist = await User.findById(userId)
 
     if(!isUserExist) throw new ApiError(404, "User doesn't exist")
-        console.log(isUserExist)
+      
 
     const userRoleUpdate = await User.findByIdAndUpdate(
         userId,

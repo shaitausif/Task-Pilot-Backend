@@ -33,7 +33,7 @@ const registerUser = asyncHandler(async(req: Request, res: Response) => {
 
     // @ts-ignore
      const avatarLocalPath = req.file.path
-     console.log("Avatar Local Path",avatarLocalPath)
+     
     if(avatarLocalPath){
         const avatar = await uploadOnCloudinary(avatarLocalPath)
         if(!avatar) throw new ApiError(500, "Failed to upload Avatar on Cloudinary")
