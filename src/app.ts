@@ -8,7 +8,7 @@ const app = express()
 
 // we use, use method of express to use middlewares and for configuration
 app.use(cors({
-    origin : process.env.CORS_ORIGIN,
+    origin : process.env.NODE_ENV == 'development' ? "http://localhost:3000" : process.env.CORS_ORIGIN,
     credentials : true
 }))
 
