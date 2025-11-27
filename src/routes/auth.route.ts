@@ -26,7 +26,7 @@ router.route('/login').post(
 router.route('/logout').post(authenticateJWT, logoutUser)
 
 
-router.route('/refresh-tokens').post(refreshAccessToken)
+router.route('/refresh-tokens').get(refreshAccessToken)
 
 
 
